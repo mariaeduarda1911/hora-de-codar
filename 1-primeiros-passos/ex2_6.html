@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // 2.6. Leia 4 valores diferentes e informe apenas o primeiro, o último e o maior deles.
+
+        var valor1=Number(prompt("Insira o primeiro valor: "));
+        var valor2=Number(prompt("Insira o segundo valor: "));
+        var valor3=Number(prompt("Insira o terceiro valor: "));
+        var valor4=Number(prompt("Insira o quarto valor: "));
+
+        alert("Primeiro valor: "+valor1);
+        alert("Último valor: "+valor4);
+
+        if (valor1>valor2 && valor1>valor3 && valor1>valor4){
+            alert("O "+valor1+" é o maior número informado");
+        }
+        else if(valor2>valor1 && valor2>valor3 && valor2>valor4){
+            alert("O "+valor2+" é o maior número informado");
+        }
+        else if(valor3>valor1 && valor3>valor2 && valor3>valor4){
+            alert("O "+valor3+" é o maior número informado");
+        }
+        else if (valor1 == valor2 && valor2 == valor3 && valor3 == valor4) {
+            alert("Todos os números são iguais!");
+        }
+        else {
+            alert("O "+valor4+" é o maior número informado");
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
