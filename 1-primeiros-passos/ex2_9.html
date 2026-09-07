@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // 2.9. Leia o ano de nascimento e informe se a pessoa pode votar no ano atual (sem considerar o mês).
+
+        var anoNasc = Number(prompt("Insira seu ano de nascimento: "))
+        var anoAtual = new Date().getFullYear();
+
+        var idade = anoAtual-anoNasc
+
+        if (idade>=16 && idade<18){
+            alert("Você pode votar, porém não é obrigatório")
+        }
+        else if (idade>=18){
+            alert("Seu voto é obrigatório")
+        }
+        else{
+            alert("Você não pode votar")
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html> nbiu
