@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // 3.2. Leia dois valores. Enquanto o segundo valor for menor ou igual a zero, peça novamente esse mesmo valor. Ao final, mostre a divisão do primeiro pelo segundo.
+
+        var valor1 = Number(prompt("Insira o primeiro valor: "));
+        var valor2 = Number(prompt("Insira o segundo valor: "));
+
+        while (valor2<=0){
+            var valor2 = Number(prompt("Insira o novamente o segundo valor: "));
+        }
+
+        var divisao = valor1/valor2;
+        document.write("A divisão de "+valor1+" por "+valor2+" é: "+divisao);
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
