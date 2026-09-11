@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // 3.7. Leia um valor `N` (N > 0) e imprima todos os inteiros de 1 até `N`.
+        var n = parseInt(prompt("Digite um valor para N (maior que 0):"));
+
+        while (n <= 0) {
+            n = parseInt(prompt("Valor inválido! Digite um valor para N (maior que 0):"));
+        }
+
+        document.write("<h2>Contando de 1 até " + n + ":</h2>");        
+        for (var i = 1; i <= n; i++) {
+            document.write(i + "<br>");
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

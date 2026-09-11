@@ -7,7 +7,17 @@
         <script>
         // 3.3. Calcule e exiba a média aritmética dos números inteiros de 15 a 100 (inclusive).
 
-        
+        var soma = 0;
+        var qtd = 0;
+
+        for (let i = 15; i <= 100; i++) {
+            soma += i;
+            qtd++;
+        }
+
+        var media = soma / qtd;
+
+        document.write("A média dos números inteiros de 15 a 100 é: " + media);
     </script>
 </head>
 <body>
