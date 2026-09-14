@@ -3,34 +3,68 @@
 <head>
 
 	<script>
+		// - Ao acessar o sistema, pergunte o nome do usuário e diga "Olá {Nome} é um prazer ter você por aqui!"
+		function saudacao(){
+			var nome = prompt("Informe seu nome: ")
+			alert ("Olá "+nome+" é um prazer ter você por aqui!")
+		}
+		saudacao()
+
 
 	    // Aqui criamos uma variavel global. Global significa que o elemento pode ser acessado por qualquer método. Para tornar global, utilizamos a palavra static.
-    
 		var saldo = 100.5; // Float (Número com ponto flutuante)
 
+
 		/*  Função principal. */
+		// - Na função "inicio", utilize escolha/caso (switch/case) ou when (quando), se possível, para validar a opção escolhida pelo usuário.
 		function inicio() {
 
-			var escolha = parseInt(prompt('Selecione uma opção 1.) Saldo 2.) Depósito 3.) Saque 4.) Sair'));
+		var escolha = parseInt(prompt('Selecione uma opção 1.) Saldo 2.) Extrato 3.) Saque 4.) Depósito 5.) Transferência 6.) Sair'));
 
-			if (escolha === 1) {
+		// switch: recebe a informação e verifica
+		switch(escolha){
+			// Caso escolha 1
+			case 1:
 				ver_saldo();
-			} else if (escolha === 2) {
-				fazer_deposito();
-			} else if (escolha === 3) {
-				fazer_saque();
-			} else if (escolha === 4) {
-				sair();
-			} else {
-				erro();
-			}
-		}
+				break;
 
+			// Caso escolha 2
+			case 2:
+				extrato();
+				break;
+
+			// Caso escolha 3
+			case 3:
+				fazer_saque();
+				break;
+
+			// Caso escolha 4
+			case 4:
+				fazer_deposito();
+				break;
+
+			// Caso escolha 5
+			case 5:
+				transferencia();
+				break;
+
+			// Caso escolha 6
+			case 6:
+				sair();
+				break;
+
+			// Nenhuma das opções
+			default:
+				erro();
+				break;
+		}
+	}
 		/*  Função principal. */
 		function ver_saldo() {
 			alert('Seu saldo atual é: ' + saldo);
 			inicio();
 		}
+
 
 		/*  Função para receber informado pelo usuário, processar e levar a uma mensagem de sucesso ou a repetição da função */
 		function fazer_deposito() {
@@ -39,17 +73,33 @@
 			if (isNaN(deposito) || deposito === '') { // A Função isNaN checa se o valor informado é um Não-Número e retorna verdadeiro ou falso.
 				alert('Por favor, informe um número:');
 				fazer_deposito();
+			// - Caso o usuário informe um valor para depósito igual ou menor que zero, não deixe a operação ocorrer. Exiba uma mensagem de "Operação não autorizada".
+			} else if(deposito<=0){
+				alert("Operação não autorizada.");
+				fazer_deposito();
 			} else {
 				saldo += deposito;
 				ver_saldo();
 			}
 		}
 
+
 		/*  Função para receber informado pelo usuário, processar e levar a uma mensagem de sucesso ou a repetição da função */
+		// - Sempre que o usuário for sacar dinheiro, o valor restante não pode ser negativo, ou seja, caso o usuário tente sacar 
+		// mais do que tem em saldo, a ação não deve ocorrer. Exiba uma mensagem de "Operação não autorizada".
 		function fazer_saque() {
 			var saque = parseFloat(prompt('Qual o valor para saque?'));
 			if (isNaN(saque) || saque === '') {
 				alert('Por favor, informe um número:');
+				fazer_saque();
+			}
+			// - Sempre que o usuário for sacar dinheiro, o valor a ser sacado não pode ser igual ou menor que zero. Exiba uma mensagem de "Operação não autorizada".
+			else if(saque<=0){
+				alert("Operação não autorizada.");
+				fazer_saque();
+			}
+			else if(saque>saldo){
+				alert("Operação não autorizada.");
 				fazer_saque();
 			} else {
 				saldo -= saque;
@@ -57,9 +107,44 @@
 			}
 		}
 
+
+		// - Adicionar a opção para ver o extrato (coloque algumas compras ou depósitos fictícios).
+		function extrato(){
+			var sapato = "All Star - R$250,00"
+			var mouse = "Mouse - R$100,00"
+			var dep = "Depósito conta 8888 - R$550,00"
+			alert(sapato+"\n"+mouse+"\n"+dep)
+			inicio()
+		}
+
+
+		// - Adicionar a opção para fazer uma transferência. A transferência consiste em você informar 
+		// o número de uma conta (pode ser qualquer número, mas obrigatoriamente um número, ou seja, nenhum 
+		// outro caractere deve ser aceito), perguntar o valor da transferência e remover o valor da conta da mesma 
+		// forma como na ação do saldo. Caso o usuário tente transferir mais do que tem em saldo, a ação não deve ocorrer. 
+		// Exiba uma mensagem de "Operação não autorizada".
+		function transferencia(){
+			var numConta = prompt('Qual o número da conta para transferência?');
+			if (numConta === '' || isNaN(numConta) || !Number.isInteger(Number(numConta))) {
+			alert('Por favor, informe um número:');
+			transferencia();
+			return
+			}
+			var valorTransferencia = parseFloat(prompt('Qual o valor para transferência?'));
+			if(valorTransferencia>saldo){
+				alert("Operação não autorizada.");
+				transferencia()
+			} else {
+				saldo -= valorTransferencia;
+				ver_saldo();
+			}
+		}
+
+
 		/* Verificar se há um erro */
+		// - Ajustar a ortografia da frase 'Por favor, informe um número entre 1 e 4' para 'Por favor, informe um número entre 1 a 4'.
 		function erro() {
-			alert('Por favor, informe um número entre 1 e 4');
+			alert('Por favor, informe um número entre 1 a 6');
 			inicio();
 		}
 
