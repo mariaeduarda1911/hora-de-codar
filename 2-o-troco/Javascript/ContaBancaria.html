@@ -3,9 +3,10 @@
 <head>
 
 	<script>
+		var nome;
 		// - Ao acessar o sistema, pergunte o nome do usuário e diga "Olá {Nome} é um prazer ter você por aqui!"
 		function saudacao(){
-			var nome = prompt("Informe seu nome: ")
+			nome = prompt("Informe seu nome: ")
 			alert ("Olá "+nome+" é um prazer ter você por aqui!")
 		}
 		saudacao()
@@ -59,8 +60,29 @@
 				break;
 		}
 	}
+
+		// - Sempre que o usuário for acessar o saldo, sacar, retirar o extrato ou transferir dinheiro é necessário que ele informe uma senha. 
+		// Essa senha deve ser validada com uma condicional. A senha é 3589.
+		var senha = 3589;
+
+		function validarSenha() {
+			var senhaUsuario = parseInt(prompt('Informe sua senha:'));
+
+			if (senhaUsuario !== senha) {
+				alert('Senha incorreta!');
+				return false;
+			}
+
+			return true;
+		}
+
+
 		/*  Função principal. */
 		function ver_saldo() {
+			if (!validarSenha()) {
+				ver_saldo();
+				return;
+			}
 			alert('Seu saldo atual é: ' + saldo);
 			inicio();
 		}
@@ -88,6 +110,11 @@
 		// - Sempre que o usuário for sacar dinheiro, o valor restante não pode ser negativo, ou seja, caso o usuário tente sacar 
 		// mais do que tem em saldo, a ação não deve ocorrer. Exiba uma mensagem de "Operação não autorizada".
 		function fazer_saque() {
+			if (!validarSenha()) {
+				fazer_saque();
+				return;
+			}
+
 			var saque = parseFloat(prompt('Qual o valor para saque?'));
 			if (isNaN(saque) || saque === '') {
 				alert('Por favor, informe um número:');
@@ -110,6 +137,11 @@
 
 		// - Adicionar a opção para ver o extrato (coloque algumas compras ou depósitos fictícios).
 		function extrato(){
+			if (!validarSenha()) {
+				extrato();
+				return;
+			}
+
 			var sapato = "All Star - R$250,00"
 			var mouse = "Mouse - R$100,00"
 			var dep = "Depósito conta 8888 - R$550,00"
@@ -124,6 +156,11 @@
 		// forma como na ação do saldo. Caso o usuário tente transferir mais do que tem em saldo, a ação não deve ocorrer. 
 		// Exiba uma mensagem de "Operação não autorizada".
 		function transferencia(){
+			if (!validarSenha()) {
+				transferencia();
+				return;
+			}
+
 			var numConta = prompt('Qual o número da conta para transferência?');
 			if (numConta === '' || isNaN(numConta) || !Number.isInteger(Number(numConta))) {
 			alert('Por favor, informe um número:');
@@ -148,15 +185,16 @@
 			inicio();
 		}
 
+		// - Quando o usuário escolher sair do sistema, exiba uma mensagem agradecendo por utilizar os serviços do banco: "{Nome}, foi um prazer ter você por aqui!".
 		function sair() {
 			var confirma = confirm('Você deseja sair?');
 			if (confirma) {
+				alert(nome+", foi um prazer ter você por aqui!");
 				window.close();
 			} else {
 				inicio();
 			}
 		}
-
 
 
 		inicio();
