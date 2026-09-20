@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // Cria lista preenchida com nomes de planetas
+        let planetas = ["mercúrio", "vênus", "terra", "marte", "júpiter", "saturno", "urano", "netuno"];
+
+        alert(planetas.join(", "))
+
+        // Entrada retirando espaços e padronizando em letras minúsculas
+        let nomePlaneta = prompt("Informe um nome de algum planeta: ").toLowerCase().trim();
+
+        if (planetas.includes(nomePlaneta)){
+            alert(nomePlaneta+" está na lista!")
+        }
+        else{
+            alert(nomePlaneta+" não está na lista!")
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

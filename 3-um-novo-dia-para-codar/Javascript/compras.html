@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let frutas = ["banana", "melão", "maçã", "melancia", "morango", "uva"];
+
+        alert("Lista de frutas: " + frutas.join(", "));
+
+        while (frutas.length > 0) {
+            let entrada = prompt("Informe o nome de uma fruta indicada ou PARE para ver as restantes:");
+            
+            if (entrada === null) {
+                entrada = "PARE";
+            }
+
+            let frutaUsuario = entrada.trim();
+
+            if (frutaUsuario.toUpperCase() === "PARE") {
+                alert("Frutas restantes: " + frutas.join(", "));
+                continue;
+            }
+
+            // Encontra o índice da fruta indicada
+            let indice = frutas.indexOf(frutaUsuario.toLowerCase());
+
+            if (indice !== -1) {
+                frutas.splice(indice, 1); 
+                alert("Fruta foi retirada da lista"); 
+            } 
+            else {
+                alert("Fruta indisponível no nosso mercado");
+            }
+        }
+
+        alert("Lista de compras finalizada");
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // Lista vazia inicial
+        let estudantes = [];
+
+        var nome = prompt("Informe o nome do estudante ou PARE para finalizar:");
+
+        while (nome != "PARE") {
+
+            // Adicionando valor na lista
+            estudantes.push(nome);
+
+            nome = prompt("Digite o nome ou PARE para finalizar:");
+        }
+
+        // Tamanho da lista
+        alert("Quantidade: " + estudantes.length);
+
+        // Une elementos da lista e retorna para o usuário
+        alert("Alunos:\n" + estudantes.join("\n"));
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
