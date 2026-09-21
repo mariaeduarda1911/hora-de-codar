@@ -12,6 +12,7 @@
 		// 3. Solicite nome do usuário e senha.
 		var nomeUsuario = prompt("Informe seu usuário: ");
 		var senha;
+		var senhaCorreta="2678";
 
 		// Contador de tentativas de acesso
 		var tentativas = 0;
@@ -23,7 +24,7 @@
 		while(tentativas<3){
 			senha=prompt("Informe sua senha");
 
-			if(senha===2678){
+			if(senha===senhaCorreta){
 				alert(`Bem-vindo ao Hotel ${nomeHotel}, ${nomeUsuario}. É um imenso prazer ter você por aqui!`);
 				break;
 			} else {
@@ -35,7 +36,7 @@
 		if (tentativas === 3 && senha !== senhaCorreta) {
 			alert("Sistema bloqueado. Número máximo de tentativas excedido.");
 		}
-		
+
 
 		function inicio() {
 
@@ -46,8 +47,14 @@
 			} else if (escolha === 2) {
 				cadastro_hospedes();
 			} else if (escolha === 3) {
-				abastecer_carros();
+				eventos();
 			} else if (escolha === 4) {
+				ar_condicionado();
+			} else if (escolha === 5) {
+				abastecer_carros();
+			} else if (escolha === 6) {
+				relatorios_operacionais();
+			} else if (escolha === 7) {
 				sair();
 			} else {
 				erro();
@@ -64,9 +71,21 @@
 			inicio();
 		}
 
+		function eventos(){
+
+		}
+
+		function ar_condicionado(){
+
+		}
+
 		function abastecer_carros() {
 			alert(`HOTEL ${nomeHotel} - ABASTECER`);
 			inicio();
+		}
+		
+		function relatorios_operacionais(){
+
 		}
 
 		function erro() {
@@ -77,6 +96,7 @@
 		function sair() {
 			var confirma = confirm('Você deseja sair?');
 			if (confirma) {
+				alert(`Muito obrigado e até logo ${nomeUsuario}.`)
 				window.close();
 			} else {
 				inicio();
