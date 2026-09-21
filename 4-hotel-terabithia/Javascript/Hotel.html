@@ -3,7 +3,39 @@
 <head>
 
 	<script>
-	
+		// 1. Defina o nome do hotel e use-o no lugar de `{Hotel}` em todas as mensagens.
+		var nomeHotel = "Terabithia";
+
+		// 2. Ao abrir o sistema, exiba: `Bem-vindo ao {Hotel}`
+		alert(`Bem-vindo(a) ao Hotel ${nomeHotel}`);
+
+		// 3. Solicite nome do usuário e senha.
+		var nomeUsuario = prompt("Informe seu usuário: ");
+		var senha;
+
+		// Contador de tentativas de acesso
+		var tentativas = 0;
+
+		// 4. Senha obrigatória: `2678`.
+		// 5. Permita no máximo **3 tentativas de senha**.
+		//- Ao exceder: encerrar sistema com mensagem de bloqueio.
+
+		while(tentativas<3){
+			senha=prompt("Informe sua senha");
+
+			if(senha===2678){
+				alert(`Bem-vindo ao Hotel ${nomeHotel}, ${nomeUsuario}. É um imenso prazer ter você por aqui!`);
+				break;
+			} else {
+				tentativas++;
+				alert("Senha incorreta!");
+			}
+		}
+
+		if (tentativas === 3 && senha !== senhaCorreta) {
+			alert("Sistema bloqueado. Número máximo de tentativas excedido.");
+		}
+		
 
 		function inicio() {
 
@@ -23,22 +55,22 @@
 		}		
 
 		function reserva_quartos() {
-			alert('HOTEL {NOME DO HOTEL} - RESERVA DE QUARTOS');
+			alert(`HOTEL ${nomeHotel} - RESERVA DE QUARTOS`);
 			inicio();
 		}
 
 		function cadastro_hospedes() {
-			alert('HOTEL {NOME DO HOTEL} - CADASTRO DE HÓSPEDES');
+			alert(`HOTEL ${nomeHotel} - CADASTRO DE HÓSPEDES`);
 			inicio();
 		}
 
 		function abastecer_carros() {
-			alert('HOTEL {NOME DO HOTEL} - ABASTECER');
+			alert(`HOTEL ${nomeHotel} - ABASTECER`);
 			inicio();
 		}
 
 		function erro() {
-			alert('Por favor, informe um número entre 1 e 4');
+			alert(`Por favor, informe um número entre 1 e 4`);
 			inicio();
 		}
 
