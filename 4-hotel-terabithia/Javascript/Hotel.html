@@ -6,6 +6,12 @@
 		// 1. Defina o nome do hotel e use-o no lugar de `{Hotel}` em todas as mensagens.
 		var nomeHotel = "Terabithia";
 
+		// Quantidade inicial de quartos livres 
+		var qtdQuartos = 20;
+
+		// Quartos já reservados
+		var quartosOcupados = [];
+
 		// 2. Ao abrir o sistema, exiba: `Bem-vindo ao {Hotel}`
 		alert(`Bem-vindo(a) ao Hotel ${nomeHotel}`);
 
@@ -39,7 +45,6 @@
 
 
 		function inicio() {
-
 			var escolha = parseInt(prompt('Selecione uma opção 1.) Reserva de Quartos 2.) Cadastro de Hóspedes 3.) Abastecimento de Carros 4.) Sair'));
 
 			if (escolha === 1) {
@@ -61,10 +66,62 @@
 			}
 		}		
 
+
+
 		function reserva_quartos() {
 			alert(`HOTEL ${nomeHotel} - RESERVA DE QUARTOS`);
-			inicio();
+
+			// Valor diária
+			var valDiaria = parseFloat(prompt("Informe o valor da diária: "));
+			if (valDiaria < 0 || isNaN(valDiaria)) {
+				alert("Valor Inválido");
+				inicio();
+				return;
+			}
+
+			// Quantidade de dias
+			var qtdDias = parseInt(prompt("Informe a quantidade de dias para hospedagem"));
+			if (qtdDias < 0 || qtdDias > 30 || isNaN(qtdDias)) {
+				alert("Valor Inválido");
+				inicio();
+				return;
+			}
+
+			// Nome do hóspede
+			var nomeHospede = prompt("Informe o nome do hóspede: ");
+
+			// Número do quarto
+			var numeroQuarto = parseInt(prompt("Informe o número do quarto (1 a 20): "));
+
+			while (numeroQuarto < 1 || numeroQuarto > 20 || isNaN(numeroQuarto)) {
+				alert("Quarto inválido");
+				numeroQuarto = parseInt(prompt("Informe o número do quarto (1 a 20): "));
+			}
+
+			// Verifica se o quarto já está ocupado
+			while (quartosOcupados.includes(numeroQuarto)) {
+				alert("Quarto já está ocupado");
+				numeroQuarto = parseInt(prompt("Escolha outro quarto (1 a 20): "));
+
+				while (numeroQuarto < 1 || numeroQuarto > 20 || isNaN(numeroQuarto)) {
+					alert("Quarto inválido");
+					numeroQuarto = parseInt(prompt("Escolha outro quarto (1 a 20): "));
+				}
+			}
+
+			// Confirmação da reserva
+			var confirma = confirm(`Confirma a reserva do quarto ${numeroQuarto} para ${nomeHospede}?`);
+
+			if (confirma) {
+				quartosOcupados.push(numeroQuarto);
+				qtdQuartos--;
+				alert("Reserva realizada com sucesso!");
+				inicio();
+			} else {
+				inicio();
+			}
 		}
+
 
 		function cadastro_hospedes() {
 			alert(`HOTEL ${nomeHotel} - CADASTRO DE HÓSPEDES`);
