@@ -1,3 +1,4 @@
+```html
 <html>
 
 <head>
@@ -11,6 +12,9 @@
 
 		// Quartos já reservados
 		var quartosOcupados = [];
+
+		// Reservas realizadas
+		var reservas = [];
 
 		// 2. Ao abrir o sistema, exiba: `Bem-vindo ao {Hotel}`
 		alert(`Bem-vindo(a) ao Hotel ${nomeHotel}`);
@@ -73,7 +77,7 @@
 
 			// Valor diária
 			var valDiaria = parseFloat(prompt("Informe o valor da diária: "));
-			if (valDiaria < 0 || isNaN(valDiaria)) {
+			if (valDiaria <= 0 || isNaN(valDiaria)) {
 				alert("Valor Inválido");
 				inicio();
 				return;
@@ -81,14 +85,32 @@
 
 			// Quantidade de dias
 			var qtdDias = parseInt(prompt("Informe a quantidade de dias para hospedagem"));
-			if (qtdDias < 0 || qtdDias > 30 || isNaN(qtdDias)) {
-				alert("Valor Inválido");
+			if (qtdDias < 1 || qtdDias > 30 || isNaN(qtdDias)) {
+				alert("Valor Inválido "); //tirar duvida do nome do hospede
 				inicio();
 				return;
 			}
 
 			// Nome do hóspede
 			var nomeHospede = prompt("Informe o nome do hóspede: ");
+
+			// Tipo de quarto
+			var tipoQuarto = prompt("Informe o tipo de quarto (S/E/L)");
+
+			while (tipoQuarto != "S" && tipoQuarto != "E" && tipoQuarto != "L") {
+				tipoQuarto = prompt("Informe o tipo de quarto (S/E/L)");
+			}
+
+			if (tipoQuarto == "S") {
+				var subtotal = qtdDias * valDiaria * 1.00;
+			} else if (tipoQuarto == "E") {
+				var subtotal = qtdDias * valDiaria * 1.35;
+			} else if (tipoQuarto == "L") {
+				var subtotal = qtdDias * valDiaria * 1.65;
+			}
+
+			var taxaServico = subtotal * 0.10;
+			var totalFinal = subtotal + taxaServico;
 
 			// Número do quarto
 			var numeroQuarto = parseInt(prompt("Informe o número do quarto (1 a 20): "));
@@ -101,6 +123,18 @@
 			// Verifica se o quarto já está ocupado
 			while (quartosOcupados.includes(numeroQuarto)) {
 				alert("Quarto já está ocupado");
+
+				// Lista quartos livres
+				var quartosLivres = "";
+
+				for (var i = 1; i <= 20; i++) {
+					if (!quartosOcupados.includes(i)) {
+						quartosLivres += i + " ";
+					}
+				}
+
+				alert(`Quartos livres: ${quartosLivres}`);
+
 				numeroQuarto = parseInt(prompt("Escolha outro quarto (1 a 20): "));
 
 				while (numeroQuarto < 1 || numeroQuarto > 20 || isNaN(numeroQuarto)) {
@@ -109,13 +143,29 @@
 				}
 			}
 
+
 			// Confirmação da reserva
 			var confirma = confirm(`Confirma a reserva do quarto ${numeroQuarto} para ${nomeHospede}?`);
 
 			if (confirma) {
 				quartosOcupados.push(numeroQuarto);
 				qtdQuartos--;
-				alert("Reserva realizada com sucesso!");
+
+				// Registra a reserva em memória
+				reservas.push({
+					hospede: nomeHospede,
+					quarto: numeroQuarto,
+					diarias: qtdDias,
+					total: totalFinal
+				});
+
+				alert(`Reserva realizada com sucesso!
+				Hóspede: ${nomeHospede}
+				Quarto: R$ ${numeroQuarto.toFixed(2)}
+				Subtotal: R$ ${subtotal.toFixed(2)}
+				Taxa de serviço: ${taxaServico}
+				Total: R$ ${totalFinal.toFixed(2)}`);
+
 				inicio();
 			} else {
 				inicio();
@@ -171,3 +221,4 @@
 </body>
 
 </html>
+
