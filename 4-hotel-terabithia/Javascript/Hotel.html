@@ -45,8 +45,8 @@
 
 			if (tentativas === 3 && senha !== senhaCorreta) {
 				alert("Sistema bloqueado. Número máximo de tentativas excedido.");
-				window.close();
-				return;
+			} else {
+				inicio();
 			}
 
 
