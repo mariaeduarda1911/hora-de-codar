@@ -39,12 +39,27 @@
 					alert("Numero máximo de hóspedes cadastrados.");
 				} else {	
 					var nome_hospede = prompt('Por favor, informe o nome da(o) hóspede:');
+
+					var nomeExiste = false;
+
+					for (var i = 0; i < lista_hospedes.length; i++) {
+						if (lista_hospedes[i].nome === nome_hospede) {
+							nomeExiste = true;
+							break;
+						}
+					}
 					
-					if (lista_hospedes.includes(nome_hospede)){
+					if (nomeExiste){
 						alert("Hóspede já cadastrado.")
 					} else{
+						var dataCadastro = new Date();
+
 						// O método push() permite adicionar um item ao Array/Vetor. Importante dizer que ele adiciona o elemento ao final do Array/Vetor. 
-						lista_hospedes.push(nome_hospede);
+						lista_hospedes.push({
+							nome: nome_hospede,
+							data: dataCadastro
+						});
+
 						console.log(lista_hospedes); // O console é usado apenas para exibir ao desenvolvedor todo mundo que já está cadastrado.
 						alert("Sucesso! Hóspede " + nome_hospede + " foi cadastrada(o) com sucesso!\n");
 					}
@@ -57,8 +72,16 @@
 			// Pesquisa por nome
 			function pesquisar_hospedes() {
 				var nome_hospede = prompt('Por favor, informe o nome da(o) hóspede para pesquisa:');
-				// O método includes() procura por um elemento dentro do Array e retorna verdadeiro ou falso. Caso queira comparar números, o mais indicado é o método find();
-				if (lista_hospedes.includes(nome_hospede)){
+				var encontrado = false;
+
+				for (var i = 0; i < lista_hospedes.length; i++) {
+					if (lista_hospedes[i].nome === nome_hospede) {
+						encontrado = true;
+						break;
+					}
+				}
+
+				if (encontrado){
 					alert(nome_hospede + ' encontrada(o).');
 				} else {
 					alert(nome_hospede + ' não foi encontrada(o).');
@@ -74,8 +97,8 @@
 				var nomesEncontrados = [];
 
 				for (var i=0; i<lista_hospedes.length;i++){
-					if (lista_hospedes[i].startsWith(prefixo)){
-						nomesEncontrados.push(lista_hospedes[i]);
+					if (lista_hospedes[i].nome.startsWith(prefixo)){
+						nomesEncontrados.push(lista_hospedes[i].nome);
 					}
 				}
 
@@ -92,9 +115,22 @@
 			function listar_hospedes(){
 				// "..." significa que estamos fazendo uma cópia de lista_hospedes
 				var listaOrdenada = [...lista_hospedes];
-				listaOrdenada.sort();
 
-				alert("Hóspedes cadastrados:\n"+listaOrdenada.join("\n"));
+				listaOrdenada.sort(function(a, b) {
+					return a.nome.localeCompare(b.nome);
+				});
+
+				var texto = "Hóspedes cadastrados:\n";
+
+				for (var i = 0; i < listaOrdenada.length; i++) {
+					texto += (i + 1) + ". " +
+						listaOrdenada[i].nome +
+						" - " +
+						listaOrdenada[i].data.toLocaleString() +
+						"\n";
+				}
+
+				alert(texto);
 
 				sistema_cadastrar_hospedes();
 			}
@@ -108,15 +144,21 @@
 					return;
 				}
 
+				var listaOrdenada = [...lista_hospedes];
+
+				listaOrdenada.sort(function(a, b) {
+					return a.nome.localeCompare(b.nome);
+				});
+
 				var lista="";
 
-				for(var i=0;i<lista_hospedes.length;i++){
-					lista += (i+1)+". "+lista_hospedes[i]+"\n";
+				for(var i=0;i<listaOrdenada.length;i++){
+					lista += (i+1)+". "+listaOrdenada[i].nome+"\n";
 				}
 
 				var indice = parseInt(prompt("Hóspedes cadastrados:\n\n"+lista+"\n Informe o número do hóspede que deseja atualizar"));
 
-				if (indice<1 || indice > lista_hospedes.length || isNaN(indice)){
+				if (indice<1 || indice > listaOrdenada.length || isNaN(indice)){
 					alert("Hóspede não encontrado!");
 					sistema_cadastrar_hospedes();
 					return;
@@ -124,13 +166,22 @@
 
 				var novoNome=prompt("Informe o nome atualizado do hóspede:");
 
-				if (lista_hospedes.includes(novoNome)){
+				var nomeExiste = false;
+
+				for (var i = 0; i < lista_hospedes.length; i++) {
+					if (lista_hospedes[i].nome === novoNome) {
+						nomeExiste = true;
+						break;
+					}
+				}
+
+				if (nomeExiste){
 					alert("Hóspede já cadastrado");
 					sistema_cadastrar_hospedes();
 					return;
 				}
 
-				lista_hospedes[indice-1]=novoNome;
+				listaOrdenada[indice-1].nome=novoNome;
 
 				alert("Nome do hóspede atualizado com sucesso!");
 
@@ -145,24 +196,32 @@
 					return;
 				}
 
+				var listaOrdenada = [...lista_hospedes];
+
+				listaOrdenada.sort(function(a, b) {
+					return a.nome.localeCompare(b.nome);
+				});
+
 				var lista="";
 
-				for (var i = 0; i < lista_hospedes.length; i++) {
-					lista += (i + 1) + ". " + lista_hospedes[i] + "\n";
+				for (var i = 0; i < listaOrdenada.length; i++) {
+					lista += (i + 1) + ". " + listaOrdenada[i].nome + "\n";
 				}
 
 				var indice = parseInt(prompt("Hóspedes cadastrados:\n\n" + lista + "\nInforme o número do hóspede que deseja remover:"));
 
-				if (indice < 1 || indice > lista_hospedes.length || isNaN(indice)) {
+				if (indice < 1 || indice > listaOrdenada.length || isNaN(indice)) {
 					alert("Hóspede não encontrado.");
 					sistema_cadastrar_hospedes();
 					return;
 				}
 
-				var nome_hospede = lista_hospedes[indice - 1];
+				var nome_hospede = listaOrdenada[indice - 1].nome;
 
 				// Remove o hóspede da lista pelo índice dele
-				lista_hospedes.splice(indice - 1, 1);
+				var posicaoOriginal = lista_hospedes.indexOf(listaOrdenada[indice - 1]);
+
+				lista_hospedes.splice(posicaoOriginal, 1);
 
 				alert("Hóspede " + nome_hospede + " removido com sucesso!");
 
