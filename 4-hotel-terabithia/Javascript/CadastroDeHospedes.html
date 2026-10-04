@@ -11,18 +11,27 @@
 			
 			function sistema_cadastrar_hospedes() {
 
-				var escolha_hospedes = parseInt(prompt('Cadastro de Hóspedes\n\n Selecione uma opção: \n1. Cadastrar \n2. Pesquisar \n3. Sair'));
+				var escolha_hospedes = parseInt(prompt('Cadastro de Hóspedes\n\n Selecione uma opção: \n1. Cadastrar \n2. Pesquisar \n3. Pesquisar por prefixo \n4. Listar hóspedes \n5. Atualizar hóspede \n6. Remover hóspede \n7. Sair'));
 
-				if (escolha_hospedes === 1) {
-					cadastrar_hospedes();
-				} else if (escolha_hospedes === 2) {
-					pesquisar_hospedes();
-				} else if (escolha_hospedes === 3) {
-					//inicio();
-				} else {
-					erro_pesquisar_hospedes();
+					if (escolha_hospedes === 1) {
+						cadastrar_hospedes();
+					} else if (escolha_hospedes === 2) {
+						pesquisar_hospedes();
+					} else if (escolha_hospedes === 3) {
+						pesquisar_prefixo_hospedes();
+					} else if (escolha_hospedes === 4) {
+						listar_hospedes();
+					} else if (escolha_hospedes === 5) {
+						atualizar_hospede();
+					} else if (escolha_hospedes === 6) {
+						remover_hospede();
+					} else if (escolha_hospedes === 7) {
+						return;
+					} else {
+						erro_pesquisar_hospedes();
+					}
 				}
-			}
+			
 			
 			function cadastrar_hospedes() {
 				// lenght é uma propriedade que retorna a quantidade de itens dentro do array. 
@@ -31,29 +40,137 @@
 				} else {	
 					var nome_hospede = prompt('Por favor, informe o nome da(o) hóspede:');
 					
-					// O método push() permite adicionar um item ao Array/Vetor. Importante dizer que ele adiciona o elemento ao final do Array/Vetor. 
-					lista_hospedes.push(nome_hospede);
-					console.log(lista_hospedes); // O console é usado apenas para exibir ao desenvolvedor todo mundo que já está cadastrado.
-					alert("Sucesso! Hóspede " + nome_hospede + " foi cadastrada(o) com sucesso!\n");
+					if (lista_hospedes.includes(nome_hospede)){
+						alert("Hóspede já cadastrado.")
+					} else{
+						// O método push() permite adicionar um item ao Array/Vetor. Importante dizer que ele adiciona o elemento ao final do Array/Vetor. 
+						lista_hospedes.push(nome_hospede);
+						console.log(lista_hospedes); // O console é usado apenas para exibir ao desenvolvedor todo mundo que já está cadastrado.
+						alert("Sucesso! Hóspede " + nome_hospede + " foi cadastrada(o) com sucesso!\n");
+					}
 				}
 				
 				sistema_cadastrar_hospedes();
 			}
-			
+
+
+			// Pesquisa por nome
 			function pesquisar_hospedes() {
 				var nome_hospede = prompt('Por favor, informe o nome da(o) hóspede para pesquisa:');
 				// O método includes() procura por um elemento dentro do Array e retorna verdadeiro ou falso. Caso queira comparar números, o mais indicado é o método find();
 				if (lista_hospedes.includes(nome_hospede)){
-					alert(nome_hospede + ' encontrada(o).')
+					alert(nome_hospede + ' encontrada(o).');
 				} else {
-					alert(nome_hospede + ' não foi encontrada(o).')
+					alert(nome_hospede + ' não foi encontrada(o).');
 				}
 				
-				sistema_cadastrar_hospedes() 
+				sistema_cadastrar_hospedes();
 			}
-			
+
+
+			// Pesquisa por prefixo
+			function pesquisar_prefixo_hospedes(){
+				var prefixo = prompt("Informe o início do nome da(o) hóspede para pesquisa");
+				var nomesEncontrados = [];
+
+				for (var i=0; i<lista_hospedes.length;i++){
+					if (lista_hospedes[i].startsWith(prefixo)){
+						nomesEncontrados.push(lista_hospedes[i]);
+					}
+				}
+
+				if (nomesEncontrados.length>0){
+					alert("Hóspedes encontrados:\n"+nomesEncontrados.join("\n"));
+				} else {
+					alert("Nenhum hóspede encontrado.")
+				}
+				sistema_cadastrar_hospedes();
+			}
+
+
+			// Listagem de hóspedes por ordem alfabética
+			function listar_hospedes(){
+				// "..." significa que estamos fazendo uma cópia de lista_hospedes
+				var listaOrdenada = [...lista_hospedes];
+				listaOrdenada.sort();
+
+				alert("Hóspedes cadastrados:\n"+listaOrdenada.join("\n"));
+
+				sistema_cadastrar_hospedes();
+			}
+
+
+			// Atualizar hóspedes
+			function atualizar_hospede(){
+				if (lista_hospedes.length===0){
+					alert("Nenhum hóspede cadastrado.");
+					sistema_cadastrar_hospedes();
+					return;
+				}
+
+				var lista="";
+
+				for(var i=0;i<lista_hospedes.length;i++){
+					lista += (i+1)+". "+lista_hospedes[i]+"\n";
+				}
+
+				var indice = parseInt(prompt("Hóspedes cadastrados:\n\n"+lista+"\n Informe o número do hóspede que deseja atualizar"));
+
+				if (indice<1 || indice > lista_hospedes.length || isNaN(indice)){
+					alert("Hóspede não encontrado!");
+					sistema_cadastrar_hospedes();
+					return;
+				}
+
+				var novoNome=prompt("Informe o nome atualizado do hóspede:");
+
+				if (lista_hospedes.includes(novoNome)){
+					alert("Hóspede já cadastrado");
+					sistema_cadastrar_hospedes();
+					return;
+				}
+
+				lista_hospedes[indice-1]=novoNome;
+
+				alert("Nome do hóspede atualizado com sucesso!");
+
+				sistema_cadastrar_hospedes();
+			}
+
+			// Remove hóspede
+			function remover_hospede(){
+				if (lista_hospedes.length===0){
+					alert("Nenhum hóspede cadastrado");
+					sistema_cadastrar_hospedes();
+					return;
+				}
+
+				var lista="";
+
+				for (var i = 0; i < lista_hospedes.length; i++) {
+					lista += (i + 1) + ". " + lista_hospedes[i] + "\n";
+				}
+
+				var indice = parseInt(prompt("Hóspedes cadastrados:\n\n" + lista + "\nInforme o número do hóspede que deseja remover:"));
+
+				if (indice < 1 || indice > lista_hospedes.length || isNaN(indice)) {
+					alert("Hóspede não encontrado.");
+					sistema_cadastrar_hospedes();
+					return;
+				}
+
+				var nome_hospede = lista_hospedes[indice - 1];
+
+				// Remove o hóspede da lista pelo índice dele
+				lista_hospedes.splice(indice - 1, 1);
+
+				alert("Hóspede " + nome_hospede + " removido com sucesso!");
+
+				sistema_cadastrar_hospedes();
+			}
+
 			function erro_pesquisar_hospedes(){
-				alert('Por favor, informe um número entre 1 e 3');
+				alert('Por favor, informe um número entre 1 e 7');
 				sistema_cadastrar_hospedes();
 			}
 
